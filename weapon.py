@@ -10,5 +10,5 @@ class Weapon(Ability):
         """
 
         half_damage = self.max_damage // 2
-        random_value = random.randint(0, half_damage)
+        random_value = random.randint(half_damage, self.max_damage)
         return random_value

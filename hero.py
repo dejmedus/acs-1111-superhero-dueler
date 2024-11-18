@@ -17,6 +17,8 @@ class Hero:
         self.abilities = list()
         self.armors = list()
         self.name = name
+        self.deaths = 0
+        self.kills = 0
         self.starting_health = starting_health
         self.current_health = starting_health
 
@@ -55,6 +57,14 @@ class Hero:
             return False
         return True
 
+    def add_kill(self, num_kills=1):
+        ''' Update self.kills by num_kills amount'''
+        self.kills += num_kills
+
+    def add_death(self, num_deaths=1):
+        ''' Update deaths with num_deaths'''
+        self.deaths += num_deaths
+
     def round(self, character, opponent):
         damage = character.attack
         opponent.defend(damage)
@@ -63,22 +73,30 @@ class Hero:
         ''' Current Hero will take turns fighting the opponent hero passed in.
         '''
 
-        if len(self.abilities) == 0 or len(opponent.abilities) == 0:
-            print("Draw")
-        else:
-            while self.is_alive() and opponent.is_alive():
-                hero_damage = self.attack()
-                opponent.take_damage(hero_damage)
+        # fair fights fail the tests (some test opponents dont have abilities)
+        # if len(self.abilities) == 0 or len(opponent.abilities) == 0:
+        #     print("Draw")
+        while self.is_alive() and opponent.is_alive():
+            hero_damage = self.attack()
+            print(hero_damage)
+            opponent.take_damage(hero_damage)
 
-                opponent_damage = opponent.attack()
-                self.take_damage(opponent_damage)
+            opponent_damage = opponent.attack()
+            print(opponent_damage)
+            self.take_damage(opponent_damage)
 
-                if self.is_alive() == False and opponent.is_alive() == False:
-                    print("Draw!")
-                elif self.is_alive() == False:
-                    print(opponent.name, " defeated ", self.name)
-                elif opponent.is_alive() == False:
-                    print(self.name, " defeated ", opponent.name)
+            if self.is_alive() == False and opponent.is_alive() == False:
+                print("Draw!")
+                self.add_death()
+                opponent.add_death()
+            elif self.is_alive() == False:
+                print(opponent.name, " defeated ", self.name)
+                self.add_death()
+                opponent.add_kill()
+            elif opponent.is_alive() == False:
+                print(self.name, " defeated ", opponent.name)
+                self.add_kill()
+                opponent.add_death()
 
     def add_ability(self, ability):
         ''' Add ability to abilities list '''

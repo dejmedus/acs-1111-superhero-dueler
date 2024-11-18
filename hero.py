@@ -73,16 +73,11 @@ class Hero:
         ''' Current Hero will take turns fighting the opponent hero passed in.
         '''
 
-        # fair fights fail the tests (some test opponents dont have abilities)
-        # if len(self.abilities) == 0 or len(opponent.abilities) == 0:
-        #     print("Draw")
         while self.is_alive() and opponent.is_alive():
             hero_damage = self.attack()
-            print(hero_damage)
             opponent.take_damage(hero_damage)
 
             opponent_damage = opponent.attack()
-            print(opponent_damage)
             self.take_damage(opponent_damage)
 
             if self.is_alive() == False and opponent.is_alive() == False:

@@ -24,3 +24,5 @@ Tests:
 ``` bash
 pytest
 ```
+#### Screenshot of Tests
+<img width="827" alt="passing-tests" src="https://github.com/user-attachments/assets/9e8cd26c-bb87-43e3-994c-c656e16e6182">
